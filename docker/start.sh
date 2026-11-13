@@ -1,6 +1,13 @@
 #!/bin/sh
 set -e
 
+# With DATABASE_URL (Supabase/PostgreSQL) the data is persistent and no local DB is needed.
+if [ -n "$DATABASE_URL" ]; then
+  export PORT="${PORT:-5000}"
+  export FRONTEND_URL="${FRONTEND_URL:-http://localhost:${PORT}}"
+  exec node server.js
+fi
+
 # --- start a private MariaDB inside the container (demo only, data resets on restart)
 mkdir -p /run/mysqld /var/lib/mysql
 chown -R mysql:mysql /run/mysqld /var/lib/mysql

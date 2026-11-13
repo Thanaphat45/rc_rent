@@ -121,3 +121,8 @@ docker compose up
 ## 🌐 Live demo
 
 https://driverent-whky.onrender.com — `demo_user` / `Demo@2026` · แอดมิน `demo_admin` / `Demo@2026` (ข้อมูลรีเซ็ตทุกครั้งที่เซิร์ฟเวอร์รีสตาร์ต)
+
+### ฐานข้อมูล PostgreSQL (Supabase)
+ตั้ง `DATABASE_URL` แล้ว API จะใช้ PostgreSQL แทน MySQL โดยอัตโนมัติ (ฟังก์ชันทั้งหมดอยู่ใน schema `driverent`)
+สร้างตาราง: `psql "$DATABASE_URL" -f car-rental-backend/database/schema-pg.sql -f car-rental-backend/database/seed-demo-pg.sql`
+เว็บที่ใช้งานจริงใช้ Supabase นี้ ข้อมูลจึงไม่หายเมื่อเซิร์ฟเวอร์รีสตาร์ต
