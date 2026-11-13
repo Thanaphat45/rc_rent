@@ -120,7 +120,7 @@ docker compose up
 
 ## 🌐 Live demo
 
-https://driverent-whky.onrender.com — `demo_user` / `Demo@2026` · แอดมิน `demo_admin` / `Demo@2026` (ข้อมูลรีเซ็ตทุกครั้งที่เซิร์ฟเวอร์รีสตาร์ต)
+https://driverent-whky.onrender.com — `demo_user` / `Demo@2026` · แอดมิน `demo_admin` / `Demo@2026` (ฐานข้อมูล PostgreSQL บน Supabase)
 
 ### ฐานข้อมูล PostgreSQL (Supabase)
 ตั้ง `DATABASE_URL` แล้ว API จะใช้ PostgreSQL แทน MySQL โดยอัตโนมัติ (ฟังก์ชันทั้งหมดอยู่ใน schema `driverent`)
