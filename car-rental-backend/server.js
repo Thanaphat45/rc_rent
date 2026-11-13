@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
@@ -31,6 +32,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api/cars", carRoutes);
 app.use("/api/rentals", rentalRoutes);
 app.use("/api/users", userRoutes);
+
+// Single-container deploy: serve the built React app from the same origin (STATIC_DIR=/app/public)
+if (process.env.STATIC_DIR) {
+  app.use(express.static(process.env.STATIC_DIR));
+  app.get(/^\/(?!api\/).*/, (req, res) => res.sendFile(path.join(process.env.STATIC_DIR, "index.html")));
+}
 
 // Error handler middleware
 app.use((err, req, res, next) => {
