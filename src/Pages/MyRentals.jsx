@@ -105,7 +105,7 @@ export default function MyRentals() {
                       : t("statusCompleted")}
                   </div>
                   <div style={{ fontSize: "15px", fontWeight: "600", color: "var(--text-primary)" }}>
-                    ฿{car?.pricePerDay?.toLocaleString() || "—"}
+                    ฿{(rental.totalPrice ?? car?.pricePerDay)?.toLocaleString() || "—"}{rental.days ? ` · ${rental.days} ${t("days")}` : ""}
                   </div>
                   {rental.status === "active" && (
                     <button

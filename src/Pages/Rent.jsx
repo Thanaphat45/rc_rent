@@ -95,7 +95,7 @@ export default function Rent() {
     }
     setSubmitting(true);
     try {
-      await rentalsAPI.create(Number(id));
+      await rentalsAPI.create(Number(id), { days: Number(days), name, phone, email, address });
       alert(`✅ Rental confirmed!\n\nCar: ${car.brand}\nDays: ${days}\nTotal: ฿${totalCost}`);
       navigate("/my-rentals");
     } catch (err) {

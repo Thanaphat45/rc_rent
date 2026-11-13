@@ -10,6 +10,7 @@ import Cars from "./Pages/Cars";
 import Rent from "./Pages/Rent";
 import MyRentals from "./Pages/MyRentals";
 import Profile from "./Pages/Profile";
+import Admin from "./Pages/Admin";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/rent/:id" element={<ProtectedRoute><Rent /></ProtectedRoute>} />
             <Route path="/my-rentals" element={<ProtectedRoute><MyRentals /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           </Routes>
         </BrowserRouter>
       </LanguageProvider>

@@ -39,7 +39,7 @@ export default function Navbar() {
           </>
         )}
         {isAdmin && (
-          <span className="navbar-admin-badge">{t("admin")}</span>
+          <Link to="/admin" className={isActive("/admin") ? "active" : ""}>{t("adminPanel")}</Link>
         )}
       </div>
 

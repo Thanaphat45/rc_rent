@@ -10,13 +10,23 @@ const router = express.Router();
 router.post(
   "/",
   auth,
-  [body("carId").isInt({ gt: 0 }).withMessage("Car ID must be a positive integer")],
+  [
+    body("carId").isInt({ gt: 0 }).withMessage("Car ID must be a positive integer"),
+    body("days").isInt({ min: 1, max: 60 }).withMessage("Days must be between 1 and 60"),
+    body("name").trim().notEmpty().isLength({ max: 100 }).withMessage("Name is required"),
+    body("phone").trim().matches(/^[0-9+\-\s]{9,20}$/).withMessage("Phone number is invalid"),
+    body("email").trim().isEmail().withMessage("Email is invalid"),
+    body("address").trim().notEmpty().isLength({ max: 255 }).withMessage("Address is required"),
+  ],
   validateRequest,
   async (req, res) => {
     try {
-      const { carId } = req.body;
+      const { carId, days, name, phone, email, address } = req.body;
 
-      const rentalRows = await callProcedure("sp_create_rental", [Number(carId), req.user.id]);
+      // National ID is checked on the form but deliberately not sent or stored (sensitive, unused).
+      const rentalRows = await callProcedure("sp_create_rental", [
+        Number(carId), req.user.id, Number(days), name, phone, email, address,
+      ]);
       const rental = rentalRows?.[0];
 
       res.status(201).json(rental);

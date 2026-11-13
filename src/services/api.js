@@ -75,10 +75,10 @@ export const carsAPI = {
 
 // Rentals API
 export const rentalsAPI = {
-  create: (carId) =>
+  create: (carId, details) =>
     apiCall("/rentals", {
       method: "POST",
-      body: JSON.stringify({ carId }),
+      body: JSON.stringify({ carId, ...details }),
     }),
 
   getMyRentals: () => apiCall("/rentals/me"),
@@ -97,3 +97,10 @@ export const userAPI = {
     }),
 };
 
+// Users API (admin)
+export const usersAPI = {
+  getAll: () => apiCall("/users"),
+  updateRole: (id, role) =>
+    apiCall(`/users/${id}/role`, { method: "PUT", body: JSON.stringify({ role }) }),
+  remove: (id) => apiCall(`/users/${id}`, { method: "DELETE" }),
+};

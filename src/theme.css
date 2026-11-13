@@ -96,3 +96,27 @@ body { background: var(--bg); color: var(--text-primary); font-family: var(--fon
 .page-title { font-family: var(--font-display); }
 .status-cancelled { color: var(--text-muted); text-decoration: line-through; }
 .dashboard-hero::before { display: none; }
+
+/* ---------- admin ---------- */
+.admin-tabs { display: flex; gap: 8px; margin: 8px 0 24px; }
+.admin-tabs button { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 8px 18px; font-weight: 600; cursor: pointer; color: var(--text-secondary); }
+.admin-tabs button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.admin-form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 24px; }
+.admin-form .section-title { margin-bottom: 16px; }
+.admin-form-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 16px; }
+.admin-form-grid label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+.admin-form-actions { display: flex; gap: 10px; margin-top: 18px; }
+.admin-form-actions .btn-accent { padding: 10px 22px; }
+.admin-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow-x: auto; }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.admin-table th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); padding: 12px 16px; border-bottom: 1px solid var(--border); }
+.admin-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.admin-table tr:last-child td { border-bottom: 0; }
+.admin-thumb { width: 84px; }
+.admin-thumb .car-art { width: 72px; height: 40px; }
+.admin-actions { text-align: right; white-space: nowrap; }
+.admin-actions button { margin-left: 6px; }
+.btn-danger-outline { background: none; border: 1px solid var(--danger); color: var(--danger); border-radius: 10px; padding: 6px 12px; cursor: pointer; font-weight: 600; }
+.btn-danger-outline:hover { background: var(--danger-light); }
+.badge-admin { background: var(--accent-light); color: var(--accent); }
+@media (max-width: 768px) { .admin-form-grid { grid-template-columns: 1fr 1fr; } }

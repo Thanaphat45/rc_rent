@@ -26,6 +26,12 @@ CREATE TABLE IF NOT EXISTS rentals (
   carId      INT NOT NULL,
   userId     INT NOT NULL,
   status     ENUM('pending','active','completed','cancelled') NOT NULL DEFAULT 'active',
+  days       INT NOT NULL DEFAULT 1,
+  totalPrice DECIMAL(10,2) NOT NULL DEFAULT 0,
+  renterName VARCHAR(100) NULL,
+  phone      VARCHAR(20)  NULL,
+  email      VARCHAR(120) NULL,
+  address    VARCHAR(255) NULL,
   createdAt  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_rentals_car  FOREIGN KEY (carId)  REFERENCES cars(id)  ON DELETE CASCADE,
   CONSTRAINT fk_rentals_user FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
@@ -110,26 +116,39 @@ END //
 
 -- ---------- rentals ----------
 DROP PROCEDURE IF EXISTS sp_create_rental //
-CREATE PROCEDURE sp_create_rental(IN p_car INT, IN p_user INT)
+CREATE PROCEDURE sp_create_rental(
+  IN p_car INT, IN p_user INT, IN p_days INT,
+  IN p_name VARCHAR(100), IN p_phone VARCHAR(20), IN p_email VARCHAR(120), IN p_address VARCHAR(255))
 BEGIN
   DECLARE v_available INT;
+  DECLARE v_price DECIMAL(10,2);
   START TRANSACTION;
-  SELECT available INTO v_available FROM cars WHERE id = p_car FOR UPDATE;
+  SELECT available, pricePerDay INTO v_available, v_price FROM cars WHERE id = p_car FOR UPDATE;
   IF v_available IS NULL THEN
     ROLLBACK; SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Car not found';
   ELSEIF v_available <= 0 THEN
     ROLLBACK; SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Car not available';
   END IF;
   UPDATE cars SET available = available - 1 WHERE id = p_car;
-  INSERT INTO rentals (carId, userId, status) VALUES (p_car, p_user, 'active');
+  -- total is computed here from the stored price, never trusted from the client
+  INSERT INTO rentals (carId, userId, status, days, totalPrice, renterName, phone, email, address)
+  VALUES (p_car, p_user, 'active', p_days, v_price * p_days, p_name, p_phone, p_email, p_address);
   COMMIT;
-  SELECT id, carId, userId, status, createdAt FROM rentals WHERE id = LAST_INSERT_ID();
+  CALL sp_get_rental_by_id(LAST_INSERT_ID());
+END //
+
+DROP PROCEDURE IF EXISTS sp_get_rental_by_id //
+CREATE PROCEDURE sp_get_rental_by_id(IN p_id INT)
+BEGIN
+  SELECT id, carId, userId, status, days, CAST(totalPrice AS DOUBLE) AS totalPrice, renterName, createdAt
+  FROM rentals WHERE id = p_id;
 END //
 
 DROP PROCEDURE IF EXISTS sp_get_my_rentals //
 CREATE PROCEDURE sp_get_my_rentals(IN p_user INT)
 BEGIN
-  SELECT id, carId, userId, status, createdAt FROM rentals WHERE userId = p_user ORDER BY id DESC;
+  SELECT id, carId, userId, status, days, CAST(totalPrice AS DOUBLE) AS totalPrice, renterName, createdAt
+  FROM rentals WHERE userId = p_user ORDER BY id DESC;
 END //
 
 DROP PROCEDURE IF EXISTS sp_cancel_rental //
