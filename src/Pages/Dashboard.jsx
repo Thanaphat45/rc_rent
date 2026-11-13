@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { carsAPI, rentalsAPI } from "../services/api";
 import { useLanguage } from "../i18n";
 import { useAuth } from "../AuthContext";
-import "../App.css";
+import CarCard from "../components/CarCard";
+import CarArt from "../components/CarArt";
 
 export default function Dashboard() {
   const [cars, setCars] = useState([]);
@@ -38,6 +39,8 @@ export default function Dashboard() {
   const availableCars = cars.filter((c) => c.available > 0).length;
   const types = [...new Set(cars.map((c) => c.type))].length;
   const activeRentals = rentals.filter(r => r.status === "active").length;
+  const completedRentals = rentals.filter(r => r.status === "completed").length;
+  const heroCar = cars.find((c) => c.available > 0) || cars[0];
 
   return (
     <div className="page-wrapper">
@@ -53,6 +56,7 @@ export default function Dashboard() {
         ) : (
           <>
             <div className="dashboard-hero">
+              {heroCar && <CarArt type={heroCar.type} id={heroCar.id} className="hero-car" />}
               <div className="hero-eyebrow">{t("carRentalPlatform")}</div>
               <h1 className="hero-title">{t("Welcome to Car Rental")}</h1>
               <p className="hero-desc">{t("rentYourCar")}</p>
@@ -61,20 +65,7 @@ export default function Dashboard() {
                   <button className="btn-accent btn-lg">{t("browseCars")}</button>
                 </Link>
                 <Link to="/my-rentals">
-                  <button
-                    style={{
-                      background: "rgba(255,255,255,0.1)",
-                      color: "#fff",
-                      border: "1px solid rgba(255,255,255,0.2)",
-                      padding: "13px 24px",
-                      borderRadius: "16px",
-                      cursor: "pointer",
-                      fontSize: "15px",
-                      fontWeight: "500",
-                    }}
-                  >
-                    {t("myRentals")}
-                  </button>
+                  <button className="btn-ghost-light">{t("myRentals")}</button>
                 </Link>
               </div>
               <div className="hero-stats" style={{ marginTop: "36px" }}>
@@ -106,13 +97,8 @@ export default function Dashboard() {
               </div>
               <div className="stat-card">
                 <div className="stat-card-icon">✅</div>
-                <div className="stat-card-value">0</div>
+                <div className="stat-card-value">{completedRentals}</div>
                 <div className="stat-card-label">{t("completed")}</div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-card-icon">⭐</div>
-                <div className="stat-card-value">4.9</div>
-                <div className="stat-card-label">{t("avgRating")}</div>
               </div>
             </div>
 
@@ -124,34 +110,7 @@ export default function Dashboard() {
             </div>
 
             <div className="car-grid">
-              {cars.slice(0, 3).map((car) => (
-                <div key={car.id} className="car-card">
-                  <div className="car-card-image">🚗</div>
-                  <div className="car-card-body">
-                    <div className="car-card-header">
-                      <div>
-                        <div className="car-title">{car.brand}</div>
-                        <div className="car-type">{car.type}</div>
-                      </div>
-                      <span className={`badge ${car.available > 0 ? "badge-available" : "badge-unavailable"}`}>
-                        {car.available > 0 ? t("available") : t("soldOut")}
-                      </span>
-                    </div>
-                    <div className="car-price">
-                      {car.pricePerDay.toLocaleString()}
-                      <span className="car-price-unit"> ฿/day</span>
-                    </div>
-                    <Link to={`/rent/${car.id}`}>
-                      <button
-                        className={car.available ? "btn-success btn-full" : "btn-danger btn-full"}
-                        disabled={!car.available}
-                      >
-                        {car.available ? t("rentNow") : t("unavailable")}
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              ))}
+              {cars.slice(0, 3).map((car) => <CarCard key={car.id} car={car} />)}
             </div>
           </>
         )}

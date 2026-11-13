@@ -1,3 +1,4 @@
+import CarArt from "../components/CarArt";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
@@ -184,7 +185,7 @@ export default function Rent() {
 
           {/* Summary Sidebar */}
           <div className="rent-card">
-            <div className="rent-card-image">🚗</div>
+            <div className="rent-card-image"><CarArt type={car?.type} id={car?.id} /></div>
             <div className="rent-card-body">
               <div className="rent-card-title">{car.brand}</div>
               <div className="car-type">{car.type}</div>

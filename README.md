@@ -101,3 +101,14 @@ npm run dev
 - รองรับภาษาอังกฤษและไทย
 
 > เป็นโปรเจคเรียนรู้ที่ใช้ React + TypeScript + Vite และเชื่อมต่อกับ backend Express ในโฟลเดอร์ `car-rental-backend/`
+
+## 🐳 รันทั้งระบบด้วย Docker (คำสั่งเดียว)
+
+```bash
+docker compose up
+```
+
+- เว็บ: http://localhost:5173 · API: http://localhost:5000/api
+- สร้างฐานข้อมูลใหม่จาก `car-rental-backend/database/schema.sql` (ตาราง + stored procedures ทั้ง 14 ตัว) และใส่ข้อมูลตัวอย่างจาก `seed-demo.sql`
+- บัญชีทดลอง: `demo_admin` / `Demo@2026` (แอดมิน), `demo_user` / `Demo@2026`
+- ไม่แตะฐานข้อมูล MySQL ที่มีอยู่ในเครื่อง (ใช้ container แยก)

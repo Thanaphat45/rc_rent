@@ -1,0 +1,98 @@
+/* DriveRent theme layer — loaded after App.css, overrides tokens and key surfaces. */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap');
+
+:root {
+  --font-display: 'Kanit', 'Syne', sans-serif;
+  --font-body: 'IBM Plex Sans Thai', 'DM Sans', sans-serif;
+
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --surface-alt: #eef0f3;
+  --border: #e3e6ea;
+  --border-strong: #c9ced6;
+
+  --ink: #10131a;
+  --ink-2: #1b2030;
+  --text-primary: #10131a;
+  --text-secondary: #565e6c;
+  --text-muted: #6f7785;
+
+  --accent: #e8590c;
+  --accent-light: #fff1e8;
+  --accent-hover: #c94c09;
+
+  --success: #1f7a4d;
+  --success-light: #dcf3e6;
+  --danger: #b42318;
+  --danger-light: #fde7e5;
+
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
+}
+
+body { background: var(--bg); color: var(--text-primary); font-family: var(--font-body); text-align: left; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ---------- navbar ---------- */
+.navbar { background: rgba(16,19,26,.92); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,.06); position: sticky; top: 0; z-index: 20; }
+.navbar-brand { font-family: var(--font-display); font-weight: 700; letter-spacing: .01em; color: #fff; }
+.navbar-brand-icon { background: var(--accent); border-radius: 10px; }
+.navbar a { color: #b8bfcc; }
+.navbar a:hover, .navbar a.active { color: #fff; }
+
+/* ---------- hero ---------- */
+.dashboard-hero {
+  position: relative; overflow: hidden; text-align: left;
+  background:
+    radial-gradient(900px 400px at 85% -10%, rgba(232,89,12,.35), transparent 60%),
+    linear-gradient(160deg, var(--ink) 0%, var(--ink-2) 100%);
+  border-radius: var(--radius-xl); padding: 64px 56px; color: #fff;
+}
+.dashboard-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.35) 0 28px, transparent 28px 56px);
+  opacity: .5;
+}
+.hero-eyebrow { color: var(--accent); letter-spacing: .14em; font-weight: 600; font-size: 12px; }
+.hero-title { color: #fff !important; font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 60px); line-height: 1.1; margin: 14px 0 12px; }
+.hero-desc { color: #c5cbd6 !important; font-size: 18px; margin-bottom: 28px; text-align: left; }
+.hero-stat-value { color: #fff; font-family: var(--font-display); }
+.hero-stat-label { color: #9aa3b2; }
+.hero-car { position: absolute; right: 48px; bottom: 28px; width: min(380px, 38%); filter: drop-shadow(0 20px 30px rgba(0,0,0,.45)); }
+
+/* ---------- buttons ---------- */
+.btn-accent, .btn-success { background: var(--accent); color: #fff; border: 0; border-radius: 12px; font-weight: 600; transition: transform .2s, background .2s; }
+.btn-accent:hover, .btn-success:hover:not(:disabled) { background: var(--accent-hover); transform: translateY(-1px); }
+.btn-ghost-light { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.2); padding: 13px 24px; border-radius: 12px; font-size: 15px; font-weight: 500; cursor: pointer; }
+.btn-ghost-light:hover { background: rgba(255,255,255,.14); }
+.btn-danger:disabled { background: var(--surface-alt); color: var(--text-muted); cursor: not-allowed; }
+
+/* ---------- stat cards ---------- */
+.stat-card { text-align: left; border-radius: var(--radius-lg); }
+.stat-card-value { font-family: var(--font-display); color: var(--text-primary); }
+
+/* ---------- car cards ---------- */
+.car-card { border-radius: var(--radius-lg); text-align: left; }
+.car-card-image { height: 170px; background: linear-gradient(180deg, #f7f8fa 0%, #e9ecf1 100%); padding: 18px 24px; }
+.car-art { width: 100%; height: 100%; max-width: 230px; transition: transform .35s cubic-bezier(.2,.7,.1,1); }
+.car-card:hover .car-art { transform: translateX(6px); }
+.car-title { font-family: var(--font-display); font-weight: 600; font-size: 19px; }
+.car-price { font-family: var(--font-display); color: var(--text-primary); text-align: left; }
+.car-price-unit { color: var(--text-muted); font-family: var(--font-body); }
+
+@media (max-width: 768px) {
+  .dashboard-hero { padding: 40px 24px 160px; }
+  .hero-car { right: 50%; transform: translateX(50%); width: 260px; bottom: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .car-art, .btn-accent, .btn-success { transition: none; }
+}
+
+.rent-card-image { background: linear-gradient(180deg, #f7f8fa 0%, #e9ecf1 100%); padding: 24px; display: flex; align-items: center; justify-content: center; }
+.rent-card-image .car-art { max-width: 320px; }
+.rental-icon { width: 72px; height: 44px; background: none; display: flex; align-items: center; }
+.rental-icon .car-art { width: 72px; height: 44px; }
+.page-title { font-family: var(--font-display); }
+.status-cancelled { color: var(--text-muted); text-decoration: line-through; }
+.dashboard-hero::before { display: none; }

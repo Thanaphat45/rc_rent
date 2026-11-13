@@ -1,3 +1,4 @@
+import CarArt from "../components/CarArt";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -87,7 +88,7 @@ export default function MyRentals() {
               const car = carsMap[rental.carId];
               return (
                 <div key={rental.id} className="rental-item">
-                  <div className="rental-icon">🚗</div>
+                  <div className="rental-icon"><CarArt type={car?.type} id={car?.id || rental.carId} /></div>
                   <div className="rental-info">
                     <div className="rental-name">{car?.brand || t("unknownCar")}</div>
                     <div className="rental-meta">
@@ -99,6 +100,8 @@ export default function MyRentals() {
                       ? t("statusActive")
                       : rental.status === "pending"
                       ? t("statusPending")
+                      : rental.status === "cancelled"
+                      ? t("statusCancelled")
                       : t("statusCompleted")}
                   </div>
                   <div style={{ fontSize: "15px", fontWeight: "600", color: "var(--text-primary)" }}>

@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "../i18n";
-import "../App.css";
+import CarArt from "./CarArt";
 
 function CarCard({ car, onRent }) {
   const { t } = useLanguage();
   return (
     <div className="car-card">
-      <div className="car-card-image">🚗</div>
+      <div className="car-card-image"><CarArt type={car.type} id={car.id} /></div>
       <div className="car-card-body">
         <div className="car-card-header">
           <div>

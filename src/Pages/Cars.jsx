@@ -1,3 +1,4 @@
+import CarArt from "../components/CarArt";
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
@@ -134,7 +135,7 @@ export default function Cars() {
       <div className="page-content">
 
         <div className="page-header">
-          <h1 className="page-title">🚘 {t("ourFleet")}</h1>
+          <h1 className="page-title">{t("ourFleet")}</h1>
           <p className="page-subtitle">{loading ? t("loading") : `${filtered.length} ${t("vehiclesAvailable")}`}</p>
         </div>
 
@@ -243,7 +244,7 @@ export default function Cars() {
               <div className="car-grid">
                 {filtered.map((car) => (
                   <div key={car.id} className="car-card">
-                    <div className="car-card-image">🚗</div>
+                    <div className="car-card-image"><CarArt type={car.type} id={car.id} /></div>
                     <div className="car-card-body">
                       <div className="car-card-header">
                         <div>
