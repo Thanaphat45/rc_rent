@@ -38,6 +38,6 @@ fi
 
 # --- API + built front end on $PORT (Render injects PORT)
 export PORT="${PORT:-5000}"
-export JWT_SECRET="${JWT_SECRET:-change-me-in-render-env}"
+# JWT_SECRET must come from the environment (config.js refuses to start without it in production)
 export FRONTEND_URL="${FRONTEND_URL:-http://localhost:${PORT}}"
 exec node server.js

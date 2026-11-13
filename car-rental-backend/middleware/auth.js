@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../config.js";
 
-const JWT_SECRET = process.env.JWT_SECRET || "SECRET";
+
 
 export const auth = (req, res, next) => {
   try {

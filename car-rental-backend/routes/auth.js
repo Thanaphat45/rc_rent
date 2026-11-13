@@ -5,9 +5,10 @@ import { body } from "express-validator";
 import { callProcedure } from "../db.js";
 import { auth } from "../middleware/auth.js";
 import { validateRequest } from "../middleware/validate.js";
+import { JWT_SECRET } from "../config.js";
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || "SECRET";
+
 const isProduction = process.env.NODE_ENV === "production";
 
 function createTokenCookie(res, token) {
